@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Form, Button } from "react-bootstrap";
 import axios from "axios";
+import { getAllByRole } from "@testing-library/react";
 // import $ from "jquery";
 // import {} from "jquery.cookie";
 axios.defaults.withCredentials = true; //같은 주소 기원으로 인식
@@ -56,11 +57,15 @@ class LoginForm extends Component {
         const buttonStyle = {
             marginTop: 10
         };
+        const borderStyle = {
+            border: "3px solid gray",
+            padding: "1rem" ,
+            borderRadius: "20px",
+        }
 
         return (
             <Form style={formStyle}>
-                <Form.Group controlId="joinForm">
-                    <div>
+                <Form.Group style={borderStyle} controlId="joinForm">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
                         type="email"
@@ -68,11 +73,12 @@ class LoginForm extends Component {
                         ref={ref => this.joinEmail=ref}
                         placeholder="Enter email"
                     />
+                    <div>
                     <Form.Text className="test-muted">
                         We'll never share your email with anyone else.
                     </Form.Text>
                     </div>
-                    
+
                     <Form.Label>name</Form.Label>
                     <Form.Control
                         type="text"
@@ -85,6 +91,7 @@ class LoginForm extends Component {
                         type="password"
                         maxLength="64"
                         ref={ref => (this.joinPw = ref)}
+                        placeholder="password"
                     />
                     <Button 
                         style={buttonStyle}
@@ -93,6 +100,29 @@ class LoginForm extends Component {
                         className="btn btn-dark"
                     >
                         회원가입
+                    </Button>
+                </Form.Group>
+
+                <Form.Group style={borderStyle} className="my-5" controlId="loginForm">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control 
+                        type="email"
+                        maxLength="100"
+                        ref={ref => (this.loginEmail= ref)}
+                        placeholder="Enter email"
+                    />
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                        type="password"
+                        maxLength="20"
+                        ref={ref => (this.loginPw = ref)}
+                        placeholder="Password"
+                    />
+                    {/* rechptcah 자리 */}
+                    <Button style={buttonStyle}
+                            onClick={this.login}
+                            className="btn btn-dark">
+                        로그인
                     </Button>
                 </Form.Group>
             </Form>

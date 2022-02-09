@@ -13,7 +13,6 @@ class Body extends Component {
         getResultForm();
         return(
             <div>
-                body
                 <Routes>{resultForm}</Routes>
             </div>
         );
