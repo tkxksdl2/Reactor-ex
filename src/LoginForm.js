@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 import { getAllByRole } from "@testing-library/react";
-// import $ from "jquery";
-// import {} from "jquery.cookie";
+import $ from "jquery";
+//import {} from "jquery.cookie";
+import Cookies from "js-cookie";
 axios.defaults.withCredentials = true; //같은 주소 기원으로 인식
 const headers = { withCredentials: true} ;
 
@@ -14,6 +15,33 @@ class LoginForm extends Component {
         const joinEmail = this.joinEmail.value;
         const joinName = this.joinName.value;
         const joinPw = this.joinPw.value;
+        const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+        const regExp2 = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
+
+        if (joinEmail === "" || joinEmail === undefined){
+            alert("이메일 주소를 입력해주세요.");
+            this.joinEmail.focus();
+            return;
+        } else if (
+            joinEmail.match(regExp) === null || joinEmail.match(regExp) === undefined) {
+            alert("이메일 형식에 맞게 입력해주세요.");
+            this.joinEmail.vlaue = "";
+            this.joinEmail.focus();
+        } else if (joinName === "" || joinName === undefined ){
+            alert("이름을 입력해주세요.");
+            this.joinName.focus();
+            return;
+        } else if (joinPw === "" || joinPw === undefined ){
+            alert("비밀번호를 입력해주세요.");
+            this.joinPw.focus();
+            return;
+        } else if (
+            joinPw.match(regExp2) === null || joinPw.match(regExp2) === undefined){
+            alert("비밀번호를 숫자와 문자, 특수문자 포함 8~16자리로 입력해주세요.");
+            this.joinPw.value = "";
+            this.joinPw.focus();
+            return;
+        }
 
         const send_param = {
             headers,
@@ -22,7 +50,7 @@ class LoginForm extends Component {
             password: this.joinPw.value
         };
         axios
-            .post("https://localhost:8080/member/join", send_param)
+            .post("http://localhost:8080/member/join", send_param)
             .then(returnData => {
                 if (returnData.data.message) {
                     alert(returnData.data.message);
@@ -32,7 +60,7 @@ class LoginForm extends Component {
                         this.joinEmail.focus();
                     } else {
                         this.joinEmail.value = "";
-                        this.joinName.valu = "";
+                        this.joinName.value = "";
                         this.joinPw.value = "";
                     }
                 } else {
@@ -45,8 +73,41 @@ class LoginForm extends Component {
     };
     
     login = () => {
-        const loginEmail = this.loginemail.value;
+        const loginEmail = this.loginEmail.value;
         const loginPw = this.loginPw.value;
+        
+        if (loginEmail === "" || loginEmail === undefined) {
+            alert("이메일 주소를 입력해주세요.");
+            this.loginEmail.focus();
+            return;
+        } else if (loginPw === "" || loginPw === undefined) {
+            alert("비밀번호를 입력해주세요.");
+            this.loginPw.focus();
+            return;
+        }
+
+        const send_param = {
+            headers,
+            email: this.loginEmail.value,
+            password: this.loginPw.value
+        };
+        axios
+            .post("http://localhost:8080/member/login", send_param)
+            .then(returnData => {
+                console.log(returnData);
+                if (returnData.data.message){
+                    Cookies.set("login_id", returnData.data._id, {expires:1} );
+                    Cookies.set("login_email", returnData.data.email, {expires:1});
+                    console.log(returnData.data);
+                    alert(returnData.data.message);
+                    window.location.reload();
+                } else {
+                    alert("로그인 실패");
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
 
     };
 
