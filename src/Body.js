@@ -10,23 +10,22 @@ class Body extends Component {
         let resultForm;
         function getResultForm() {
             if (Cookies.get('login_id')){
-                resultForm = <Route exact path="/" element={<BoardForm />}></Route>;
+                resultForm = <Route path="/" element={<BoardForm />}></Route>;
             } else {
-                resultForm = <Route exact path="/" element={<LoginForm />}></Route>;
+                resultForm = <Route path="/" element={<LoginForm />}></Route>;
             }
             return resultForm;
         }
         getResultForm();
+
         return(
             <div>
                 <Routes>
-                    <Route path="/boardWrite" component={BoardWriteForm}></Route>
+                    <Route path="/boardWrite" element={<BoardWriteForm />} />   
                     {resultForm}
                 </Routes>
             </div>
         );
-        
-        
     }
 }
 

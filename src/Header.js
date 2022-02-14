@@ -49,12 +49,12 @@ class Header extends Component{
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                 <Nav className="me-auto">
-                    <Nav.Link to="/">
+                    <Nav.Link href="/">
                         <button style={buttonStyle} className="btn btn-secondary">
                         글목록
                         </button>
                     </Nav.Link>
-                    <Nav.Link to="/boardWrite">
+                    <Nav.Link href="/boardWrite">
                         <button style={buttonStyle} className="btn btn-secondary">
                             글쓰기
                         </button>
