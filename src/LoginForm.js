@@ -111,11 +111,6 @@ class LoginForm extends Component {
 
     };
 
-    logout = () => {
-        console.log('로그아웃');
-        alert("로그아웃.");
-    };
-
     render() {
         const formStyle = {
             margin: 50

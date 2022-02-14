@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import LoginForm from "./LoginForm";
 import BoardForm from "./BoardForm";
+import BoardWriteForm from "./BoardWriteForm";
 import Cookies from "js-cookie";
 import { Routes, Route } from "react-router-dom";
 
@@ -18,7 +19,10 @@ class Body extends Component {
         getResultForm();
         return(
             <div>
-                <Routes>{resultForm}</Routes>
+                <Routes>
+                    <Route path="/boardWrite" component={BoardWriteForm}></Route>
+                    {resultForm}
+                </Routes>
             </div>
         );
         

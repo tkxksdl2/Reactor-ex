@@ -54,7 +54,7 @@ class Header extends Component{
                         글목록
                         </button>
                     </Nav.Link>
-                    <Nav.Link to="/">
+                    <Nav.Link to="/boardWrite">
                         <button style={buttonStyle} className="btn btn-secondary">
                             글쓰기
                         </button>
