@@ -1,13 +1,18 @@
 import React, { Component } from "react";
 import LoginForm from "./LoginForm";
-
+import BoardForm from "./BoardForm";
+import Cookies from "js-cookie";
 import { Routes, Route } from "react-router-dom";
 
 class Body extends Component {
     render(){
         let resultForm;
         function getResultForm() {
-            resultForm = <Route exact path="/" element={<LoginForm />}></Route>;
+            if (Cookies.get('login_id')){
+                resultForm = <Route exact path="/" element={<BoardForm />}></Route>;
+            } else {
+                resultForm = <Route exact path="/" element={<LoginForm />}></Route>;
+            }
             return resultForm;
         }
         getResultForm();

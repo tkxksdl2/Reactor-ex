@@ -1,11 +1,40 @@
 import React, { Component } from "react";
 import { Navbar, Nav, NavDropdown, Container,  Button, Image } from "react-bootstrap";
+import axios from "axios";
+import Cookies from "js-cookie";
+axios.defaults.withCredentials = true;
+const headers = { withCredentials : true };
 
 class Header extends Component{
     state = {
-        buttonDisplay: "true"
+        buttonDisplay: "none"
     }
 
+    componentDidMount() {
+        if (Cookies.get('login_id')) {
+            this.setState({
+                buttonDisplay: "block"
+            });
+        } else {
+            this.setState({
+                buttonDisplay: "none"
+            });
+        }
+    }
+
+    logout = () => {
+        axios
+            .get("http://localhost:8080/member/logout", {
+                headers
+            })
+            .then(returnData =>  {
+                if (returnData.data.message){
+                Cookies.remove("login_id");
+                alert("로그아웃 되었습니다!");
+                window.location.href = "/";
+            }
+        });
+    };
 
     render() {
         const buttonStyle = {
@@ -30,16 +59,11 @@ class Header extends Component{
                             글쓰기
                         </button>
                     </Nav.Link>
-                    <Button style={buttonStyle} variant="light">
-                        로그아웃
-                    </Button>
-                    <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                    <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                    </NavDropdown>
+                    <Nav.Link>
+                        <button style={buttonStyle} className="btn btn-light" onClick={this.logout}>
+                            로그아웃
+                        </button>
+                    </Nav.Link>
                 </Nav>
                 </Navbar.Collapse>
             </Container>
