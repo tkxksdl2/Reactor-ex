@@ -60,6 +60,7 @@ class BoardForm extends Component {
                         <BoardRow
                             key={Date.now() + Math.random() * 500}
                             id={item._id}
+                            name={item.name}
                             createdAt={item.createdAt}
                             title={item.title}
                         ></BoardRow>
