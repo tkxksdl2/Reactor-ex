@@ -11,23 +11,17 @@ class BoardRow extends Component {
         return (
             <tr>
                 <td>
-                    <NavLink
-                        to={{ pathname: "/board/detail", query: {_id:this.props._id } }}
-                    >
+                <NavLink to="/board/detail" state={{_id:this.props.id }}>
                         {this.props.createdAt.substring(0,10) }
                     </NavLink>
                 </td>
                 <td>
-                    <NavLink
-                        to={{ pathname: "/board/detail", query: {_id:this.props._id } }}
-                    >
+                    <NavLink to="/board/detail" state={{_id:this.props.id }}>
                         {this.props.name }
                     </NavLink>
                 </td>
                 <td>
-                    <NavLink
-                        to={{ pathname: "/board/detail", query: {_id:this.props._id } }}
-                    >
+                    <NavLink to="/board/detail" state={{_id:this.props.id }}>
                         {this.props.title}
                     </NavLink>
                 </td>

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 import { getAllByRole } from "@testing-library/react";
-import $ from "jquery";
 //import {} from "jquery.cookie";
 import Cookies from "js-cookie";
 axios.defaults.withCredentials = true; //같은 주소 기원으로 인식
@@ -95,7 +94,7 @@ class LoginForm extends Component {
             .post("http://localhost:8080/member/login", send_param)
             .then(returnData => {
                 console.log(returnData);
-                if (returnData.data.message){
+                if (returnData.data._id){
                     Cookies.set("login_id", returnData.data._id, {expires:1} );
                     Cookies.set("login_email", returnData.data.email, {expires:1});
                     console.log(returnData.data);
@@ -103,6 +102,7 @@ class LoginForm extends Component {
                     window.location.reload();
                 } else {
                     alert("로그인 실패");
+                    window.location.reload();
                 }
             })
             .catch(err => {

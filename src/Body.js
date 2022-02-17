@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import LoginForm from "./LoginForm";
 import BoardForm from "./BoardForm";
 import BoardWriteForm from "./BoardWriteForm";
+import BoardDetail from "./BoardDetail";
 import Cookies from "js-cookie";
 import { Routes, Route } from "react-router-dom";
 
@@ -21,6 +22,7 @@ class Body extends Component {
         return(
             <div>
                 <Routes>
+                    <Route path="/board/detail" element={<BoardDetail />} />
                     <Route path="/boardWrite" element={<BoardWriteForm />} />   
                     {resultForm}
                 </Routes>
