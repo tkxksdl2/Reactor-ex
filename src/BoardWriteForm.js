@@ -1,4 +1,5 @@
-import React, {Component} from "react";
+import React, {Component, useEffect, useState} from "react";
+import {useLocation} from "react-router-dom";
 import { CKEditor } from "ckeditor4-react";
 import {Button, Form} from "react-bootstrap";
 import axios from "axios";
@@ -6,38 +7,58 @@ import Cookies from "js-cookie";
 axios.defaults.withCredentials = true;
 const headers = { withCredentials:true };
 
-class BoardWriteForm extends Component {
-    state = {
-        data:"내용을 입력하세요."
-    };
+const BoardWriteForm = () => {
+    const [state, setData] = useState({
+        data:"내용을 입력하세요.",
+    });
+    let boardTitle = "";
 
-    componentDidMount() {
-        if (this.props.location !== undefined){
-            this.boardTitle.value = this.props.location.query.title;
+    console.log('처음',state);
+    const location = useLocation();
+  
+    useEffect(() => {
+        if (location.state !== null){
+            setData({...state,
+                        data: location.state.content,
+                    }
+            );
+            console.log('setdata 직후',state);
         }
-    };
+    }, []);
+
+    console.log('이후',state);
+    
+    // componentDidMount() {
+    //     if (this.props.location !== undefined){
+    //         this.boardTitle.value = this.props.location.query.title;
+    //     }
+    // };
 
 
-    componentWillMount(){
-        if (this.props.location !== undefined) {
-            this.setState({
-                data: this.props.location.query.content
-            });
-        }
-    };
+    // componentWillMount(){
+    //     if (this.props.location !== undefined) {
+    //         this.setState({
+    //             data: this.props.location.query.content
+    //         });
+    //     }
+    // };
 
-    onEditorChange = evt => {
-        this.setState({
-            data: evt.editor.getData()
+    const onEditorChange = evt => {
+        setData(prevState => {
+           return ({...prevState,
+                    data: evt.editor.getData()});
         });
+        console.log(state);
     };
 
-    writeBoard = () => {
+    const writeBoard = () => {
         let url;
         let send_param;
 
-        const boardTitle = this.boardTitle.value;
-        const boardContent = this.state.data;
+        const boardTitle = state.boardTitle.value;
+        const boardContent = state.data;
+        console.log(state.boardTitle);
+        console.log(boardTitle, boardContent);
 
         if (boardTitle === undefined || boardTitle ==="") {
             alert("글 제목을 입력해주세요.");
@@ -49,11 +70,11 @@ class BoardWriteForm extends Component {
             return;
         }
 
-        if (this.props.location !== undefined){
+        if (location.state !== null){
             url = "http://localhost:8080/board/update";
             send_param = {
                 headers,
-                "_id" : this.props.location.query._id,
+                "_id" : location.state._id,
                 "title" : boardTitle,
                 "Content" : boardContent
             };
@@ -82,39 +103,39 @@ class BoardWriteForm extends Component {
             });
     };
 
-    render (){
-        const divStyle = {
-            margin: 50
-        };
-        const titleStyle = {
-            marginBottom: 5
-        };
-        const ButtonStyle = {
-            marginTop: 5
-        };
-
-        return( 
-            <div style={divStyle} className="App">
-                    <h2>글 쓰기</h2>
-                    <Form.Control
-                        type="text"
-                        style={titleStyle}
-                        placeholder="글 제목"
-                        ref={ref => (this.boardTitle = ref)}
-                    />
-                    <CKEditor
-                        initData={this.state.data}
-                        onChange={this.onEditorChange}
-                        onInstanceReady={ () => {
-                            alert( '게시글을 입력하세요!' );
-                        } }
-                    />
-                    <Button style={ButtonStyle} onClick={this.writeBoard}>
-                        저장하기
-                    </Button>
-            </div>
-        );
+    
+    const divStyle = {
+        margin: 50
     };
+    const titleStyle = {
+        marginBottom: 5
+    };
+    const ButtonStyle = {
+        marginTop: 5
+    };
+
+    return( 
+        <div style={divStyle} className="App">
+                <h2>글 쓰기</h2>
+                <Form.Control
+                    type="text"
+                    style={titleStyle}
+                    placeholder="글 제목"
+                    ref={ref => (boardTitle = ref)}
+                />
+                <CKEditor
+                    initData={state.data}
+                    onChange={onEditorChange}
+                    onInstanceReady={ () => {
+                        alert( '게시글을 입력하세요!' );
+                    } }
+                />
+                <Button style={ButtonStyle} onClick={writeBoard}>
+                    저장하기
+                </Button>
+        </div>
+    );
+    
 };
 
 export default BoardWriteForm;

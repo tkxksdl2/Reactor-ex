@@ -78,16 +78,15 @@ const BoardDetail = () => {
                             </Table>
                             <div className="d-grid gap-2">
                                 <NavLink
-                                    to={{ pathname: "/boardWrite",
-                                          query: { title:returnData.data.board[0].title,
-                                                   content:returnData.data.board[0].content,
-                                                   _id : location.state._id
-                                                } 
-                                        }}    
-                                >   <div className="d-grid gap-2">
-                                        <Button variant="secondary" style={marginBottom}>
-                                            글 수정
-                                        </Button>
+                                    to= "/boardWrite"
+                                    state= {{ title:returnData.data.board[0].title,
+                                            content:returnData.data.board[0].content,
+                                            _id : location.state._id
+                                }}>
+                                    <div className="d-grid gap-2">
+                                            <Button variant="secondary" style={marginBottom}>
+                                                글 수정
+                                            </Button>
                                     </div>
                                 </NavLink>
                                 <Button 
