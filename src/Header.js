@@ -15,7 +15,7 @@ class Header extends Component{
             this.setState({
                 buttonDisplay: "block"
             });
-        } else {0
+        } else {
             this.setState({
                 buttonDisplay: "none"
             });

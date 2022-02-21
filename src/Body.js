@@ -20,15 +20,37 @@ class Body extends Component {
         }
         getResultForm();
 
+        const flexContainer = {
+            display: "flex",
+            flexDirection: "row",
+            justyfycontent: "center",
+            height: "100vh"
+        }
+
+        const sideStyle ={
+            backgroundColor: "gray",
+            flexGrow: 1
+        };
+        
+        const mainStyle = {
+            flexBasis: "1000px"
+        }
+        
         return(
-            <div>
-                <Routes>
-                    <Route path="/mypage" element={<MypageForm />} />
-                    <Route path="/board/detail" element={<BoardDetail />} />
-                    <Route path="/boardWrite" element={<BoardWriteForm />} />   
-                    {resultForm}
-                </Routes>
+            
+            <div style={flexContainer}>
+                <div style={sideStyle}></div>
+                <div style={mainStyle}>
+                    <Routes>
+                        <Route path="/mypage" element={<MypageForm />} />
+                        <Route path="/board/detail" element={<BoardDetail />} />
+                        <Route path="/boardWrite" element={<BoardWriteForm />} />   
+                        {resultForm}
+                    </Routes>
+                </div>
+                <div style={sideStyle}></div>
             </div>
+            
         );
     }
 }
