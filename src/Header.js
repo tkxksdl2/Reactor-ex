@@ -15,7 +15,7 @@ class Header extends Component{
             this.setState({
                 buttonDisplay: "block"
             });
-        } else {
+        } else {0
             this.setState({
                 buttonDisplay: "none"
             });
@@ -30,6 +30,7 @@ class Header extends Component{
             .then(returnData =>  {
                 if (returnData.data.message){
                 Cookies.remove("login_id");
+                Cookies.remove("login_email");
                 alert("로그아웃 되었습니다!");
                 window.location.href = "/";
             }
