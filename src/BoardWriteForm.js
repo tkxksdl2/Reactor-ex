@@ -12,7 +12,6 @@ const BoardWriteForm = () => {
         data:"내용을 입력하세요.",
         boardTitle: {value:"글 제목"}
     });
-    console.log('처음',state);
     const location = useLocation();
   
     useMemo(() => {
@@ -22,13 +21,10 @@ const BoardWriteForm = () => {
                         boardTitle : {value: location.state.title}
                     }
             );
-            
-            console.log('setdata 직후',state);
         }
     }, []);
 
     let boardRef = "";
-    console.log('이후',state);
     
     // componentDidMount() {
     //     if (this.props.location !== undefined){
@@ -50,7 +46,6 @@ const BoardWriteForm = () => {
            return ({...prevState,
                     data: evt.editor.getData()});
         });
-        console.log(state);
     };
 
     const writeBoard = () => {
@@ -66,8 +61,6 @@ const BoardWriteForm = () => {
 
         
         const boardContent = state.data;
-        console.log(state.boardTitle);
-        console.log(boardTitle, boardContent);
 
         if (boardTitle === undefined || boardTitle ==="") {
             alert("글 제목을 입력해주세요.");
