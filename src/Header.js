@@ -40,7 +40,15 @@ class Header extends Component{
         const buttonStyle = {
             margin: "0px 5px 0px 10px",
             display: this.state.buttonDisplay
+        };
+        const imgDivStyle = {
+            textAlign: "center",
+        };
+        const imgStyle = {
+            width:"100%",
+            height: "150px"
         }
+
         return (
             <div>
             <Navbar bg="light" expand="lg">
@@ -68,6 +76,9 @@ class Header extends Component{
                 </Navbar.Collapse>
             </Container>
             </Navbar>
+            <div style={imgDivStyle}>
+                <img src="http://placeimg.com/1000/160/nature/sepia" style={imgStyle} ></img>
+            </div>
             </div>
         )
     }
