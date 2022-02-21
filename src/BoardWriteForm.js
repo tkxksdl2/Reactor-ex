@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from "react";
+import React, {Component, useEffect, useState, useMemo} from "react";
 import {useLocation} from "react-router-dom";
 import { CKEditor } from "ckeditor4-react";
 import {Button, Form} from "react-bootstrap";
@@ -10,22 +10,24 @@ const headers = { withCredentials:true };
 const BoardWriteForm = () => {
     const [state, setData] = useState({
         data:"내용을 입력하세요.",
+        boardTitle: {value:"글 제목"}
     });
-    let boardTitle = "";
-
     console.log('처음',state);
     const location = useLocation();
   
-    useEffect(() => {
+    useMemo(() => {
         if (location.state !== null){
             setData({...state,
                         data: location.state.content,
+                        boardTitle : {value: location.state.title}
                     }
             );
+            
             console.log('setdata 직후',state);
         }
     }, []);
 
+    let boardRef = "";
     console.log('이후',state);
     
     // componentDidMount() {
@@ -55,7 +57,14 @@ const BoardWriteForm = () => {
         let url;
         let send_param;
 
-        const boardTitle = state.boardTitle.value;
+        let boardTitle;
+        if (boardRef.value === undefined || boardRef.value === ""){
+            boardTitle = state.boardTitle.value;
+        } else {
+            boardTitle = boardRef.value;
+        }
+
+        
         const boardContent = state.data;
         console.log(state.boardTitle);
         console.log(boardTitle, boardContent);
@@ -76,7 +85,7 @@ const BoardWriteForm = () => {
                 headers,
                 "_id" : location.state._id,
                 "title" : boardTitle,
-                "Content" : boardContent
+                "content" : boardContent
             };
         } else {
             url = "http://localhost:8080/board/write";
@@ -120,8 +129,8 @@ const BoardWriteForm = () => {
                 <Form.Control
                     type="text"
                     style={titleStyle}
-                    placeholder="글 제목"
-                    ref={ref => (boardTitle = ref)}
+                    placeholder={state.boardTitle.value}
+                    ref={ref => (boardRef = ref)}
                 />
                 <CKEditor
                     initData={state.data}
