@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState, useMemo} from "react";
+import React, {useState, useMemo} from "react";
 import {useLocation} from "react-router-dom";
 import { CKEditor } from "ckeditor4-react";
 import {Button, Form} from "react-bootstrap";
@@ -25,21 +25,6 @@ const BoardWriteForm = () => {
     }, []);
 
     let boardRef = "";
-    
-    // componentDidMount() {
-    //     if (this.props.location !== undefined){
-    //         this.boardTitle.value = this.props.location.query.title;
-    //     }
-    // };
-
-
-    // componentWillMount(){
-    //     if (this.props.location !== undefined) {
-    //         this.setState({
-    //             data: this.props.location.query.content
-    //         });
-    //     }
-    // };
 
     const onEditorChange = evt => {
         setData(prevState => {
